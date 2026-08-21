@@ -43,11 +43,9 @@
             <span class="tab-link" id="header2">Результат</span>
         </div>
 
-        <!-- Головна HTML ФОРМА -->
-        <!-- Змініть YOUR_EMAIL@gmail.com на вашу справжню пошту -->
+        <!-- Пошта активована тут у 83-му рядку -->
         <form action="https://formsubmit.co" method="POST" id="mainForm" onsubmit="handleFormSubmit(event)">
             
-            <!-- Приховує стандартну сторінку успіху сервісу, щоб залишатися на нашому сайті -->
             <input type="hidden" name="_next" value="">
             <input type="hidden" name="_captcha" value="false">
 
@@ -57,12 +55,12 @@
                 
                 <div class="options-group">
                     <label class="option-box">
-                        <input type="radio" name="Відповідь" id="yesInput" value="Так, йдемо гуляти! 😍" checked>
+                        <input type="radio" name="Рішення" id="yesInput" value="Так! 😍 Йдемо гуляти!" checked>
                         <span class="square">Так</span>
                     </label>
                     
                     <label class="option-box">
-                        <input type="radio" name="Відповідь" id="noInput" value="Ні, не хочу 😢">
+                        <input type="radio" name="Рішення" id="noInput" value="Спроба натиснути Ні 😢">
                         <span class="square">Ні</span>
                     </label>
                 </div>
@@ -90,18 +88,18 @@
 
     <script>
         function handleFormSubmit(event) {
-            event.preventDefault(); // Зупиняємо стандартне перезавантаження сторінки
+            event.preventDefault();
             
             const form = document.getElementById('mainForm');
             const isYesSelected = document.getElementById('yesInput').checked;
             
-            // Відправляємо дані на FormSubmit у фоновому режимі (AJAX)
+            // Надсилаємо дані на вашу пошту у фоновому режимі
             fetch(form.action, {
                 method: "POST",
                 body: new FormData(form)
             });
 
-            // Візуальне перемикання вкладок
+            // Зміна вкладок на екрані користувача
             document.getElementById('content1').classList.remove('active');
             document.getElementById('header1').classList.remove('active');
             document.getElementById('header2').classList.add('active');
@@ -124,4 +122,3 @@
 
 </body>
 </html>
-
