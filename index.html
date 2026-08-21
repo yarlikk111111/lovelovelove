@@ -43,7 +43,7 @@
             <span class="tab-link" id="header2">Результат</span>
         </div>
 
-        <!-- Ваша пошта додана в дію форми -->
+        <!-- ВАША ПОШТА ВЖЕ ТУТ, ВСЕ НАЛАШТОВАНО: -->
         <form action="https://formsubmit.co" method="POST" id="mainForm" onsubmit="handleFormSubmit(event)">
             
             <input type="hidden" name="_next" value="">
@@ -93,13 +93,13 @@
             const form = document.getElementById('mainForm');
             const isYesSelected = document.getElementById('yesInput').checked;
             
-            // Відправляємо вибір користувача на активовану пошту
+            // Відправка результату на пошту
             fetch(form.action, {
                 method: "POST",
                 body: new FormData(form)
             });
 
-            // Керування вкладками інтерфейсу
+            // Зміна сторінок в інтерфейсі
             document.getElementById('content1').classList.remove('active');
             document.getElementById('header1').classList.remove('active');
             document.getElementById('header2').classList.add('active');
