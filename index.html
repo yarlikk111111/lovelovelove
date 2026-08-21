@@ -5,242 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>План на неділю ✨</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .card-container {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-        }
-
-        /* Навігація вкладок */
-        .tab-headers {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .tab-link {
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: #eee;
-            font-size: 14px;
-            font-weight: 600;
-            color: #888;
-            transition: all 0.3s ease;
-        }
-
-        .tab-link.active {
-            background: #6c5ce7;
-            color: white;
-            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
-        }
-
-        /* Керування видимістю вкладок */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        h2 {
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #2d3436;
-        }
-
-        /* Блок вибору відповідей */
-        .options-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .option-box {
-            position: relative;
-            width: 110px;
-            height: 100px;
-        }
-
-        .option-box input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
-
-        .square {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            background: #f1f2f6;
-            border: 2px solid #dfe4ea;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #57606f;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        /* Ефекти для вибраного "Так" (Синій) */
-        #yesInput:checked ~ .square {
-            background: #e8f4fd;
-            border-color: #2196F3;
-            color: #2196F3;
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
-        }
-
-        /* Ефекти для вибраного "Ні" (Червоний) */
-        #noInput:checked ~ .square {
-            background: #ffeaa7;
-            border-color: #ff7675;
-            color: #d63031;
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(214, 48, 49, 0.2);
-        }
-
-        /* Головна кнопка */
-        .submit-btn {
-            background: #6c5ce7;
-            color: white;
-            border: none;
-            padding: 12px 35px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
-        }
-
-        .submit-btn:hover {
-            background: #5b4cc4;
-            transform: translateY(-2px);
-        }
-
-        /* Іконки для результатів */
-        .status-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-        }
-
-        .heart-animation {
-            animation: heartBeat 1.2s infinite;
-        }
-
-        .error-animation {
-            animation: shake 0.5s ease-in-out;
-        }
-
-        /* Тексти результатів */
-        .success-title {
-            color: #00b894;
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .error-title {
-            color: #d63031;
-            font-size: 26px;
-            font-weight: 700;
-        }
-
-        .error-btn {
-            background: #d63031;
-            margin-top: 20px;
-        }
-        .error-btn:hover {
-            background: #b2bec3;
-        }
-
-        /* Анімації */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes heartBeat {
-            0% { transform: scale(1); }
-            14% { transform: scale(1.1); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.1); }
-            70% { transform: scale(1); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-10px); }
-            40%, 80% { transform: translateX(10px); }
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #333; }
+        .card-container { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 450px; text-align: center; }
+        .tab-headers { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .tab-link { padding: 8px 16px; border-radius: 20px; background: #eee; font-size: 14px; font-weight: 600; color: #888; transition: all 0.3s ease; }
+        .tab-link.active { background: #6c5ce7; color: white; box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+        h2 { font-size: 24px; margin-bottom: 25px; color: #2d3436; }
+        .options-group { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
+        .option-box { position: relative; width: 110px; height: 100px; }
+        .option-box input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+        .square { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; background: #f1f2f6; border: 2px solid #dfe4ea; border-radius: 12px; font-size: 18px; font-weight: bold; color: #57606f; cursor: pointer; transition: all 0.2s ease; }
+        #yesInput:checked ~ .square { background: #e8f4fd; border-color: #2196F3; color: #2196F3; transform: scale(1.05); box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2); }
+        #noInput:checked ~ .square { background: #ffeaa7; border-color: #ff7675; color: #d63031; transform: scale(1.05); box-shadow: 0 5px 15px rgba(214, 48, 49, 0.2); }
+        .submit-btn { background: #6c5ce7; color: white; border: none; padding: 12px 35px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); }
+        .submit-btn:hover { background: #5b4cc4; transform: translateY(-2px); }
+        .status-icon { font-size: 60px; margin-bottom: 15px; }
+        .heart-animation { animation: heartBeat 1.2s infinite; }
+        .error-animation { animation: shake 0.5s ease-in-out; }
+        .success-title { color: #00b894; font-size: 28px; font-weight: 700; }
+        .error-title { color: #d63031; font-size: 26px; font-weight: 700; }
+        .error-btn { background: #d63031; margin-top: 20px; }
+        .error-btn:hover { background: #b2bec3; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes heartBeat { 0%, 28%, 70% { transform: scale(1); } 14%, 42% { transform: scale(1.1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
     </style>
 </head>
 <body>
 
     <div class="card-container">
         
-        <!-- Навігація вкладок -->
         <div class="tab-headers">
             <span class="tab-link active" id="header1">Запитання</span>
             <span class="tab-link" id="header2">Результат</span>
         </div>
 
-        <!-- ВКЛАДКА 1: Запитання -->
-        <div class="tab-content active" id="content1">
-            <h2>Чи будемо ми гуляти в неділю? 😊</h2>
+        <!-- Головна HTML ФОРМА -->
+        <!-- Змініть YOUR_EMAIL@gmail.com на вашу справжню пошту -->
+        <form action="https://formsubmit.co" method="POST" id="mainForm" onsubmit="handleFormSubmit(event)">
             
-            <div class="options-group">
-                <!-- Варіант "Так" -->
-                <label class="option-box">
-                    <input type="radio" name="answer" id="yesInput" checked>
-                    <span class="square">Так</span>
-                </label>
+            <!-- Приховує стандартну сторінку успіху сервісу, щоб залишатися на нашому сайті -->
+            <input type="hidden" name="_next" value="">
+            <input type="hidden" name="_captcha" value="false">
+
+            <!-- ВКЛАДКА 1 -->
+            <div class="tab-content active" id="content1">
+                <h2>Чи будемо ми гуляти в неділю? 😊</h2>
                 
-                <!-- Варіант "Ні" -->
-                <label class="option-box">
-                    <input type="radio" name="answer" id="noInput">
-                    <span class="square">Ні</span>
-                </label>
+                <div class="options-group">
+                    <label class="option-box">
+                        <input type="radio" name="Відповідь" id="yesInput" value="Так, йдемо гуляти! 😍" checked>
+                        <span class="square">Так</span>
+                    </label>
+                    
+                    <label class="option-box">
+                        <input type="radio" name="Відповідь" id="noInput" value="Ні, не хочу 😢">
+                        <span class="square">Ні</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Підтвердити</button>
             </div>
+        </form>
 
-            <button class="submit-btn" onclick="checkAnswer()">Підтвердити</button>
-        </div>
-
-        <!-- ВКЛАДКА 2: Успіх (Скоро побачимось) -->
+        <!-- ВКЛАДКА 2: Успіх -->
         <div class="tab-content" id="contentSuccess">
             <div class="status-icon heart-animation">❤️</div>
             <h2 class="success-title">Скоро побачимось!</h2>
-            <p style="color: #636e72; margin-top: 10px;"><3 ✨</p>
+            <p style="color: #636e72; margin-top: 10px;">Очікуй найкращі вихідні ✨</p>
         </div>
 
-        <!-- ВКЛАДКА 3: Помилка (Ууупс) -->
+        <!-- ВКЛАДКА 3: Помилка -->
         <div class="tab-content" id="contentError">
             <div class="status-icon error-animation">❌</div>
             <h2 class="error-title">Ууупс... Виникла помилка!</h2>
@@ -251,37 +89,39 @@
     </div>
 
     <script>
-        function checkAnswer() {
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Зупиняємо стандартне перезавантаження сторінки
+            
+            const form = document.getElementById('mainForm');
             const isYesSelected = document.getElementById('yesInput').checked;
             
-            // Ховаємо першу вкладку
+            // Відправляємо дані на FormSubmit у фоновому режимі (AJAX)
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(form)
+            });
+
+            // Візуальне перемикання вкладок
             document.getElementById('content1').classList.remove('active');
-            
-            // Оновлюємо статус верхнього меню на "Результат"
             document.getElementById('header1').classList.remove('active');
             document.getElementById('header2').classList.add('active');
 
             if (isYesSelected) {
-                // Якщо вибрано "Так" — показуємо вкладку успіху
                 document.getElementById('contentSuccess').classList.add('active');
             } else {
-                // Якщо вибрано "Ні" — показуємо вкладку помилки
                 document.getElementById('contentError').classList.add('active');
             }
         }
 
-        // Функція для кнопки "Назад", щоб дати людині другий шанс
         function goBack() {
             document.getElementById('contentError').classList.remove('active');
             document.getElementById('content1').classList.add('active');
-            
             document.getElementById('header2').classList.remove('active');
             document.getElementById('header1').classList.add('active');
-            
-            // Автоматично перемикаємо вибір на "Так"
             document.getElementById('yesInput').checked = true;
         }
     </script>
 
 </body>
 </html>
+
