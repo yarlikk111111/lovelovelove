@@ -28,7 +28,7 @@
 
         .submit-btn { background: #6c5ce7; color: white; border: none; padding: 12px 35px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); }
         .submit-btn:hover { background: #5b4cc4; transform: translateY(-2px); }
-        .submit-btn:disabled { background: #b2bec3; cursor: not-allowed; transform: none; box-shadow: none; }
+        .submit-btn:disabled { background: #a29bfe; cursor: not-allowed; transform: none; }
         .status-icon { font-size: 60px; margin-bottom: 15px; }
         .heart-animation { animation: heartBeat 1.2s infinite; }
         .error-animation { animation: shake 0.5s ease-in-out; }
@@ -52,9 +52,8 @@
 
         <form action="https://formsubmit.co/yaroslav.lukashchukk@gmail.com" method="POST" id="mainForm" onsubmit="handleFormSubmit(event)">
             
-            <input type="hidden" name="_next" value="">
+            <input type="hidden" name="_subject" value="Нова відповідь на запрошення! 🎉">
             <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" id="emailSubject" value="Нова відповідь про прогулянку!">
 
             <div class="tab-content active" id="content1">
                 <h2>Чи будемо ми гуляти в неділю? 😊</h2>
@@ -71,7 +70,7 @@
                     </label>
                 </div>
 
-                <button type="button" class="submit-btn" onclick="processFirstStep()">Підтвердити</button>
+                <button type="button" class="submit-btn" id="btnStep1" onclick="processFirstStep()">Підтвердити</button>
             </div>
 
             <div class="tab-content" id="contentDateTime">
@@ -80,20 +79,14 @@
                 <div class="select-wrapper">
                     <label for="daySelect">Обери день:</label>
                     <select name="Обраний день" id="daySelect" class="custom-select">
-                        <option value="Понеділок (найближчий)">Понеділок</option>
-                        <option value="Вівторок (найближчий)">Вівторок</option>
-                        <option value="Середа (найближча)">Середа</option>
-                        <option value="Четвер (найближчий)">Четвер</option>
-                        <option value="П'ятниця (найближча)">П'ятниця</option>
-                        <option value="Субота (найближча)">Субота</option>
-                        <option value="Неділя (найближча)" selected>Неділя</option>
+                        <!-- Опції динамічно згенеровано через JS -->
                     </select>
 
                     <label for="timeInput">Обери час:</label>
                     <input type="time" name="Обраний час" id="timeInput" class="custom-input" value="19:00" required>
                 </div>
 
-                <button type="submit" class="submit-btn" id="finalSubmitBtn">Надіслати відповідь</button>
+                <button type="submit" class="submit-btn" id="btnSubmit">Надіслати відповідь</button>
             </div>
         </form>
 
@@ -111,8 +104,41 @@
         </div>
 
     </div>
-          
+        
     <script>
+        // Генерація динамічних дат для випадаючого списку
+        function generateDayOptions() {
+            const select = document.getElementById('daySelect');
+            select.innerHTML = '';
+
+            const daysNames = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота'];
+            const today = new Date();
+
+            for (let i = 0; i < 7; i++) {
+                const targetDate = new Date();
+                targetDate.setDate(today.getDate() + i);
+
+                const dayName = daysNames[targetDate.getDay()];
+                const dayNum = String(targetDate.getDate()).padStart(2, '0');
+                const monthNum = String(targetDate.getMonth() + 1).padStart(2, '0');
+
+                const optionText = `${dayName}, ${dayNum}.${monthNum}`;
+                const option = document.createElement('option');
+                option.value = optionText;
+                option.textContent = optionText;
+
+                // За замовчуванням обираємо найближчу Неділю
+                if (dayName === 'Неділя') {
+                    option.selected = true;
+                }
+
+                select.appendChild(option);
+            }
+        }
+
+        // Запускаємо генерацію дат під час завантаження
+        generateDayOptions();
+
         function processFirstStep() {
             const isYesSelected = document.getElementById('yesInput').checked;
 
@@ -120,36 +146,38 @@
                 document.getElementById('content1').classList.remove('active');
                 document.getElementById('contentDateTime').classList.add('active');
             } else {
-                // Відправляємо сповіщення про спробу натиснути "Ні"
-                document.getElementById('emailSubject').value = "Спроба відмовитися від прогулянки! 😢";
-                sendDataToServer();
-                switchInterfaceToTabs(false);
+                sendDataAndSwitch(false);
             }
         }
 
-        async function handleFormSubmit(event) {
+        function handleFormSubmit(event) {
             event.preventDefault();
-            
-            const submitBtn = document.getElementById('finalSubmitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerText = "Надсилання...";
-
-            document.getElementById('emailSubject').value = "Ура! Згода на прогулянку! 🎉";
-
-            await sendDataToServer();
-            switchInterfaceToTabs(true);
+            sendDataAndSwitch(true);
         }
 
-        async function sendDataToServer() {
+        function sendDataAndSwitch(isSuccess) {
             const form = document.getElementById('mainForm');
-            try {
-                await fetch(form.action, {
-                    method: "POST",
-                    body: new FormData(form)
-                });
-            } catch (error) {
-                console.error("Помилка при відправці форми:", error);
-            }
+            const submitBtn = document.getElementById('btnSubmit');
+            const step1Btn = document.getElementById('btnStep1');
+            
+            submitBtn.disabled = true;
+            step1Btn.disabled = true;
+
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(form)
+            })
+            .then(() => {
+                switchInterfaceToTabs(isSuccess);
+            })
+            .catch((error) => {
+                console.error("Помилка відправки:", error);
+                switchInterfaceToTabs(isSuccess);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                step1Btn.disabled = false;
+            });
         }
 
         function switchInterfaceToTabs(isSuccess) {
