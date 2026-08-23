@@ -3,231 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>План на неділю ✨</title>
+    <title>Set Arrival Time — Signature Aviation Style</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #1c1e21; padding: 20px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        .card-container { background: #ffffff; padding: 36px 28px; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.06); width: 100%; max-width: 400px; text-align: center; }
+        body { 
+            background: #090D16; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            color: #F8FAFC; 
+            padding: 16px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%);
+        }
         
-        .tab-headers { display: flex; justify-content: center; gap: 8px; margin-bottom: 28px; background: #f2f3f7; padding: 4px; border-radius: 100px; }
-        .tab-link { flex: 1; padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; color: #8a8d91; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .tab-link.active { background: #ffffff; color: #1c1e21; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .card-container { 
+            background: rgba(15, 23, 42, 0.75); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 28px 24px; 
+            border-radius: 28px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(56, 189, 248, 0.05); 
+            width: 100%; 
+            max-width: 390px; 
+            position: relative;
+        }
+
+        /* Авіаційна шапка */
+        .flight-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: #38BDF8;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h2 { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #F8FAFC; letter-spacing: -0.3px; }
+        
+        .tab-headers { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; background: rgba(255, 255, 255, 0.04); padding: 4px; border-radius: 14px; }
+        .tab-link { flex: 1; padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 600; color: #64748B; transition: all 0.25s ease; text-align: center; }
+        .tab-link.active { background: rgba(255, 255, 255, 0.08); color: #F8FAFC; border: 1px solid rgba(255, 255, 255, 0.1); }
         
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
         
-        h2 { font-size: 22px; font-weight: 700; margin-bottom: 24px; color: #1c1e21; letter-spacing: -0.3px; }
-        
-        /* Варіанти Так/Ні */
-        .options-group { display: flex; justify-content: center; gap: 14px; margin-bottom: 28px; }
-        .option-box { position: relative; flex: 1; height: 96px; }
-        .option-box input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
-        .square { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; background: #f7f8fa; border: 2px solid #e4e6eb; border-radius: 20px; font-size: 17px; font-weight: 700; color: #65676b; cursor: pointer; transition: all 0.2s ease; }
-        #yesInput:checked ~ .square { background: #f0f5ff; border-color: #3b82f6; color: #2563eb; transform: scale(1.02); box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15); }
-        #noInput:checked ~ .square { background: #fff1f2; border-color: #f43f5e; color: #e11d48; transform: scale(1.02); box-shadow: 0 8px 20px rgba(244, 63, 94, 0.15); }
+        /* Вибір Так/Ні */
+        .options-group { display: flex; gap: 12px; margin-bottom: 24px; }
+        .option-box { position: relative; flex: 1; height: 80px; }
+        .option-box input { position: absolute; opacity: 0; cursor: pointer; }
+        .square { 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            gap: 4px;
+            width: 100%; 
+            height: 100%; 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 16px; 
+            font-size: 15px; 
+            font-weight: 600; 
+            color: #94A3B8; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+        }
+        #yesInput:checked ~ .square { background: rgba(56, 189, 248, 0.12); border-color: #38BDF8; color: #38BDF8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+        #noInput:checked ~ .square { background: rgba(239, 68, 68, 0.12); border-color: #EF4444; color: #EF4444; }
 
-        /* Поліпшений Dribbble-style Time Picker */
-        .field-group { display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; text-align: left; }
-        .field-label { font-size: 13px; font-weight: 600; color: #8a8d91; letter-spacing: 0.2px; }
-        
-        .custom-select { width: 100%; padding: 14px 18px; border: 1px solid #e4e6eb; border-radius: 16px; font-size: 15px; font-weight: 600; color: #1c1e21; outline: none; transition: all 0.2s; background: #f7f8fa; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='%2365676b' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>"); background-repeat: no-repeat; background-position: right 14px center; }
-        .custom-select:focus { border-color: #6366f1; background-color: #ffffff; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12); }
+        /* iOS/Aviation Calendar Selection */
+        .date-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+        }
+        .date-day-header { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 4px; text-align: center; }
+        .date-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #94A3B8;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .date-cell:hover { background: rgba(255, 255, 255, 0.06); }
+        .date-cell.active { background: #38BDF8; color: #0F172A; font-weight: 700; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
 
-        /* Інтерактивна картка вибору часу */
-        .time-picker-card { background: #f7f8fa; border: 1px solid #e4e6eb; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 14px; transition: border-color 0.2s; }
-        .time-picker-card:focus-within { border-color: #6366f1; background-color: #ffffff; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12); }
-        
-        .time-display-container { display: flex; align-items: center; justify-content: center; gap: 8px; background: #ffffff; border: 1px solid #e4e6eb; border-radius: 14px; padding: 10px; }
-        .time-selector-unit { border: none; background: #f2f3f7; border-radius: 10px; font-size: 22px; font-weight: 700; color: #1c1e21; outline: none; cursor: pointer; padding: 6px 12px; text-align: center; width: 68px; transition: all 0.2s; }
-        .time-selector-unit:focus { background: #6366f1; color: #ffffff; }
-        .time-colon { font-size: 22px; font-weight: 800; color: #8a8d91; }
+        /* Hours & Radar Minute Dial */
+        .time-selection-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
 
-        /* Швидкі пресети часу */
-        .quick-presets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .preset-chip { background: #ffffff; border: 1px solid #e4e6eb; border-radius: 10px; padding: 8px 0; font-size: 13px; font-weight: 600; color: #65676b; cursor: pointer; text-align: center; transition: all 0.2s; }
-        .preset-chip:hover { border-color: #6366f1; color: #6366f1; }
-        .preset-chip.active { background: #6366f1; border-color: #6366f1; color: #ffffff; }
+        .hours-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+        .hours-scroll::-webkit-scrollbar { display: none; }
+        
+        .hour-chip {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #94A3B8;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .hour-chip.active { background: rgba(56, 189, 248, 0.2); border-color: #38BDF8; color: #38BDF8; }
 
-        /* Головні кнопки */
-        .submit-btn { background: #6366f1; color: #ffffff; border: none; padding: 16px; font-size: 15px; font-weight: 700; border-radius: 18px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25); width: 100%; }
-        .submit-btn:hover { background: #4f46e5; transform: translateY(-1px); }
-        .submit-btn:disabled { background: #c7d2fe; cursor: not-allowed; transform: none; box-shadow: none; }
+        /* Radar-Style Minute Selector */
+        .radar-minute-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748B; letter-spacing: 0.5px; text-align: left; }
         
-        .status-icon { font-size: 56px; margin-bottom: 12px; }
-        .heart-animation { animation: heartBeat 1.2s infinite; }
-        .error-animation { animation: shake 0.5s ease-in-out; }
-        .success-title { color: #10b981; font-size: 24px; font-weight: 700; }
-        .error-title { color: #f43f5e; font-size: 22px; font-weight: 700; }
-        .error-btn { background: #f2f3f7; color: #65676b; margin-top: 18px; box-shadow: none; }
-        .error-btn:hover { background: #e4e6eb; color: #1c1e21; }
+        .radar-dial {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            position: relative;
+        }
+
+        .radar-btn {
+            position: relative;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 0;
+            border-radius: 12px;
+            color: #94A3B8;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .radar-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .radar-btn:hover::before { opacity: 1; }
+
+        .radar-btn.active {
+            background: #38BDF8;
+            color: #0F172A;
+            border-color: #38BDF8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Кнопки action */
+        .submit-btn { 
+            background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%); 
+            color: #0F172A; 
+            border: none; 
+            padding: 16px; 
+            font-size: 15px; 
+            font-weight: 700; 
+            border-radius: 16px; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25); 
+            width: 100%; 
+            letter-spacing: 0.2px;
+        }
+        .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(56, 189, 248, 0.35); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .status-icon { font-size: 48px; margin-bottom: 12px; }
+        .success-title { color: #38BDF8; font-size: 22px; font-weight: 700; }
+        .error-title { color: #EF4444; font-size: 20px; font-weight: 700; }
+        .error-btn { background: rgba(255, 255, 255, 0.1); color: #F8FAFC; margin-top: 18px; box-shadow: none; }
         
-        @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes heartBeat { 0%, 28%, 70% { transform: scale(1); } 14%, 42% { transform: scale(1.12); } }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div class="card-container">
+        <div style="text-align: center;">
+            <div class="flight-badge">✈️ Flight Protocol</div>
+        </div>
+
         <div class="tab-headers">
-            <span class="tab-link active" id="header1">Запитання</span>
-            <span class="tab-link" id="header2">Результат</span>
+            <span class="tab-link active" id="header1">1. Confirmation</span>
+            <span class="tab-link" id="header2">2. Arrival Time</span>
         </div>
 
         <form action="https://formsubmit.co/yaroslav.lukashchukk@gmail.com" method="POST" id="mainForm" onsubmit="handleFormSubmit(event)">
             
-            <input type="hidden" name="_subject" value="Нова відповідь на запрошення! 🎉">
+            <input type="hidden" name="_subject" value="New Arrival Time Confirmed! 🛫">
             <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="Обраний день" id="finalDayInput" value="Неділя, 24">
             <input type="hidden" name="Обраний час" id="finalTimeInput" value="19:00">
 
             <div class="tab-content active" id="content1">
-                <h2>Чи будемо ми гуляти в неділю? 😊</h2>
+                <h2>Чи гуляємо в неділю? ✈️</h2>
                 
                 <div class="options-group">
                     <label class="option-box">
-                        <input type="radio" name="Рішення" id="yesInput" value="Так! 😍 Йдемо гуляти!" checked>
-                        <span class="square">Так</span>
+                        <input type="radio" name="Рішення" id="yesInput" value="Так! 🛫 Готовий до вильоту" checked>
+                        <span class="square">
+                            <span style="font-size: 20px;">👍</span>
+                            <span>Так</span>
+                        </span>
                     </label>
                     
                     <label class="option-box">
-                        <input type="radio" name="Рішення" id="noInput" value="Спроба натиснути Ні 😢">
-                        <span class="square">Ні</span>
+                        <input type="radio" name="Рішення" id="noInput" value="Ні ❌ Рейс скасовано">
+                        <span class="square">
+                            <span style="font-size: 20px;">👎</span>
+                            <span>Ні</span>
+                        </span>
                     </label>
                 </div>
 
-                <button type="button" class="submit-btn" id="btnStep1" onclick="processFirstStep()">Підтвердити</button>
+                <button type="button" class="submit-btn" id="btnStep1" onclick="processFirstStep()">Далі крок 2 →</button>
             </div>
 
             <div class="tab-content" id="contentDateTime">
-                <h2>Коли тобі зручно? 📅</h2>
+                <h2>Вкажіть час прибуття 🕒</h2>
                 
-                <div class="field-group">
-                    <div>
-                        <div class="field-label" style="margin-bottom: 8px;">ОБЕРИ ДЕНЬ</div>
-                        <select name="Обраний день" id="daySelect" class="custom-select"></select>
+                <!-- Авіаційний Календар -->
+                <div class="date-picker-grid">
+                    <div class="date-day-header">Пн</div>
+                    <div class="date-day-header">Вт</div>
+                    <div class="date-day-header">Ср</div>
+                    <div class="date-day-header">Чт</div>
+                    <div class="date-day-header">Пт</div>
+                    <div class="date-day-header">Сб</div>
+                    <div class="date-day-header">Нд</div>
+                    
+                    <div class="date-cell" onclick="selectDate('18', this)">18</div>
+                    <div class="date-cell" onclick="selectDate('19', this)">19</div>
+                    <div class="date-cell" onclick="selectDate('20', this)">20</div>
+                    <div class="date-cell" onclick="selectDate('21', this)">21</div>
+                    <div class="date-cell" onclick="selectDate('22', this)">22</div>
+                    <div class="date-cell" onclick="selectDate('23', this)">23</div>
+                    <div class="date-cell active" onclick="selectDate('24 (Нд)', this)">24</div>
+                </div>
+
+                <!-- Селектор Годин і Хвилин -->
+                <div class="time-selection-container">
+                    <div class="radar-minute-title">Година (Local Time)</div>
+                    <div class="hours-scroll">
+                        <div class="hour-chip" onclick="selectHour('17', this)">17:00</div>
+                        <div class="hour-chip" onclick="selectHour('18', this)">18:00</div>
+                        <div class="hour-chip active" onclick="selectHour('19', this)">19:00</div>
+                        <div class="hour-chip" onclick="selectHour('20', this)">20:00</div>
+                        <div class="hour-chip" onclick="selectHour('21', this)">21:00</div>
                     </div>
 
-                    <div>
-                        <div class="field-label" style="margin-bottom: 8px;">ОБЕРИ ЧАС (24H)</div>
-                        <div class="time-picker-card">
-                            <div class="time-display-container">
-                                <select id="hoursSelect" class="time-selector-unit" onchange="onTimeDropdownChange()"></select>
-                                <span class="time-colon">:</span>
-                                <select id="minutesSelect" class="time-selector-unit" onchange="onTimeDropdownChange()"></select>
-                            </div>
-
-                            <div class="quick-presets" id="presetChips">
-                                <div class="preset-chip" onclick="applyPreset('14:00', this)">14:00</div>
-                                <div class="preset-chip" onclick="applyPreset('17:00', this)">17:00</div>
-                                <div class="preset-chip active" onclick="applyPreset('19:00', this)">19:00</div>
-                                <div class="preset-chip" onclick="applyPreset('20:30', this)">20:30</div>
-                            </div>
-                        </div>
+                    <div class="radar-minute-title">Хвилини (Radar Dial)</div>
+                    <div class="radar-dial">
+                        <button type="button" class="radar-btn active" onclick="selectMinute('00', this)">:00</button>
+                        <button type="button" class="radar-btn" onclick="selectMinute('15', this)">:15</button>
+                        <button type="button" class="radar-btn" onclick="selectMinute('30', this)">:30</button>
+                        <button type="button" class="radar-btn" onclick="selectMinute('45', this)">:45</button>
                     </div>
                 </div>
 
-                <button type="submit" class="submit-btn" id="btnSubmit">Надіслати відповідь</button>
+                <button type="submit" class="submit-btn" id="btnSubmit">Підтвердити час 🛬</button>
             </div>
         </form>
 
-        <div class="tab-content" id="contentSuccess">
-            <div class="status-icon heart-animation">❤️</div>
-            <h2 class="success-title">Скоро побачимось!</h2>
-            <p style="color: #8a8d91; margin-top: 8px;">&lt;3 ✨</p>
+        <div class="tab-content" id="contentSuccess" style="text-align: center;">
+            <div class="status-icon">✈️</div>
+            <h2 class="success-title">Рейс підтверджено!</h2>
+            <p style="color: #94A3B8; margin-top: 8px; font-size: 14px;">До зустрічі на локації! &lt;3</p>
         </div>
 
-        <div class="tab-content" id="contentError">
-            <div class="status-icon error-animation">❌</div>
-            <h2 class="error-title">Ууупс... Виникла помилка!</h2>
-            <p style="color: #8a8d91; margin-top: 8px;">Ця кнопка заблокована провайдером. Спробуйте інший варіант відповіді 😜</p>
-            <button class="submit-btn error-btn" onclick="goBack()">Назад до вибору</button>
+        <div class="tab-content" id="contentError" style="text-align: center;">
+            <div class="status-icon">⚠️</div>
+            <h2 class="error-title">Помилка навігації</h2>
+            <p style="color: #94A3B8; margin-top: 8px; font-size: 14px;">Ця опція недоступна. Будь ласка, оберіть позитивну відповідь 😉</p>
+            <button class="submit-btn error-btn" onclick="goBack()">Повернутися</button>
         </div>
     </div>
         
     <script>
-        function generateDayOptions() {
-            const select = document.getElementById('daySelect');
-            select.innerHTML = '';
-            const daysNames = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота'];
-            const today = new Date();
+        let selectedHour = "19";
+        let selectedMinute = "00";
 
-            for (let i = 0; i < 7; i++) {
-                const targetDate = new Date();
-                targetDate.setDate(today.getDate() + i);
-
-                const dayName = daysNames[targetDate.getDay()];
-                const dayNum = String(targetDate.getDate()).padStart(2, '0');
-                const monthNum = String(targetDate.getMonth() + 1).padStart(2, '0');
-
-                const optionText = `${dayName}, ${dayNum}.${monthNum}`;
-                const option = document.createElement('option');
-                option.value = optionText;
-                option.textContent = optionText;
-
-                if (dayName === 'Неділя') {
-                    option.selected = true;
-                }
-                select.appendChild(option);
-            }
+        function selectDate(day, element) {
+            document.querySelectorAll('.date-cell').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('finalDayInput').value = `День ${day}`;
         }
 
-        function initTimeSelectors() {
-            const hoursSelect = document.getElementById('hoursSelect');
-            const minutesSelect = document.getElementById('minutesSelect');
-
-            hoursSelect.innerHTML = '';
-            minutesSelect.innerHTML = '';
-
-            for (let h = 0; h < 24; h++) {
-                const val = String(h).padStart(2, '0');
-                const opt = new Option(val, val);
-                if (h === 19) opt.selected = true;
-                hoursSelect.add(opt);
-            }
-
-            for (let m = 0; m < 60; m += 15) {
-                const val = String(m).padStart(2, '0');
-                const opt = new Option(val, val);
-                minutesSelect.add(opt);
-            }
+        function selectHour(hour, element) {
+            document.querySelectorAll('.hour-chip').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            selectedHour = hour;
+            updateFinalTime();
         }
 
-        function applyPreset(timeStr, element) {
-            const [h, m] = timeStr.split(':');
-            document.getElementById('hoursSelect').value = h;
-            document.getElementById('minutesSelect').value = m;
-            document.getElementById('finalTimeInput').value = timeStr;
-
-            document.querySelectorAll('.preset-chip').forEach(chip => chip.classList.remove('active'));
-            if (element) {
-                element.classList.add('active');
-            }
+        function selectMinute(minute, element) {
+            document.querySelectorAll('.radar-btn').forEach(b => b.classList.remove('active'));
+            element.classList.add('active');
+            selectedMinute = minute;
+            updateFinalTime();
         }
 
-        function onTimeDropdownChange() {
-            const h = document.getElementById('hoursSelect').value;
-            const m = document.getElementById('minutesSelect').value;
-            const formatted = `${h}:${m}`;
-            document.getElementById('finalTimeInput').value = formatted;
-
-            document.querySelectorAll('.preset-chip').forEach(chip => {
-                if (chip.textContent === formatted) {
-                    chip.classList.add('active');
-                } else {
-                    chip.classList.remove('active');
-                }
-            });
+        function updateFinalTime() {
+            document.getElementById('finalTimeInput').value = `${selectedHour}:${selectedMinute}`;
         }
-
-        generateDayOptions();
-        initTimeSelectors();
 
         function processFirstStep() {
             const isYesSelected = document.getElementById('yesInput').checked;
             if (isYesSelected) {
                 document.getElementById('content1').classList.remove('active');
                 document.getElementById('contentDateTime').classList.add('active');
+                document.getElementById('header1').classList.remove('active');
+                document.getElementById('header2').classList.add('active');
             } else {
                 sendDataAndSwitch(false);
             }
@@ -241,31 +364,21 @@
         function sendDataAndSwitch(isSuccess) {
             const form = document.getElementById('mainForm');
             const submitBtn = document.getElementById('btnSubmit');
-            const step1Btn = document.getElementById('btnStep1');
             
             submitBtn.disabled = true;
-            step1Btn.disabled = true;
 
             fetch(form.action, {
                 method: "POST",
                 body: new FormData(form)
             })
-            .then(() => { switchInterfaceToTabs(isSuccess); })
-            .catch((error) => {
-                console.error("Помилка відправки:", error);
-                switchInterfaceToTabs(isSuccess);
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                step1Btn.disabled = false;
-            });
+            .then(() => switchInterfaceToTabs(isSuccess))
+            .catch(() => switchInterfaceToTabs(isSuccess))
+            .finally(() => submitBtn.disabled = false);
         }
 
         function switchInterfaceToTabs(isSuccess) {
             document.getElementById('content1').classList.remove('active');
             document.getElementById('contentDateTime').classList.remove('active');
-            document.getElementById('header1').classList.remove('active');
-            document.getElementById('header2').classList.add('active');
 
             if (isSuccess) {
                 document.getElementById('contentSuccess').classList.add('active');
