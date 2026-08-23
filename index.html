@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>План на неділю ✨</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #333; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #333; padding: 15px; }
         .card-container { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 450px; text-align: center; }
         .tab-headers { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .tab-link { padding: 8px 16px; border-radius: 20px; background: #eee; font-size: 14px; font-weight: 600; color: #888; transition: all 0.3s ease; }
@@ -21,12 +21,21 @@
         #yesInput:checked ~ .square { background: #e8f4fd; border-color: #2196F3; color: #2196F3; transform: scale(1.05); box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2); }
         #noInput:checked ~ .square { background: #ffeaa7; border-color: #ff7675; color: #d63031; transform: scale(1.05); box-shadow: 0 5px 15px rgba(214, 48, 49, 0.2); }
         
-        .select-wrapper { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; text-align: left; }
-        .select-wrapper label { font-size: 14px; font-weight: 600; color: #636e72; margin-bottom: -5px; }
-        .custom-select, .custom-input { width: 100%; padding: 12px 15px; border: 2px solid #dfe4ea; border-radius: 10px; font-size: 16px; color: #2d3436; outline: none; transition: border-color 0.2s; background: #fbfbfb; }
-        .custom-select:focus, .custom-input:focus { border-color: #6c5ce7; background: #fff; }
+        .select-wrapper { display: flex; flex-direction: column; gap: 18px; margin-bottom: 30px; text-align: left; }
+        .select-wrapper label { font-size: 14px; font-weight: 600; color: #636e72; margin-bottom: -10px; }
+        
+        /* Покращені стилі для селектів */
+        .custom-select { width: 100%; padding: 12px 15px; border: 2px solid #dfe4ea; border-radius: 12px; font-size: 16px; font-weight: 500; color: #2d3436; outline: none; transition: all 0.2s; background: #f8f9fa; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='%236c5ce7' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>"); background-repeat: no-repeat; background-position: right 12px center; }
+        .custom-select:focus { border-color: #6c5ce7; background-color: #fff; box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1); }
 
-        .submit-btn { background: #6c5ce7; color: white; border: none; padding: 12px 35px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); }
+        /* Стильний блок вибору часу (24-годинний) */
+        .time-picker-container { display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; border: 2px solid #dfe4ea; border-radius: 12px; padding: 6px 15px; transition: all 0.2s; }
+        .time-picker-container:focus-within { border-color: #6c5ce7; background-color: #fff; box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1); }
+        .time-select-group { display: flex; align-items: center; gap: 8px; width: 100%; }
+        .time-select { border: none; background: transparent; font-size: 18px; font-weight: 700; color: #2d3436; outline: none; cursor: pointer; text-align: center; flex: 1; padding: 6px 0; text-align-last: center; }
+        .time-separator { font-size: 20px; font-weight: bold; color: #6c5ce7; user-select: none; }
+
+        .submit-btn { background: #6c5ce7; color: white; border: none; padding: 12px 35px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); width: 100%; }
         .submit-btn:hover { background: #5b4cc4; transform: translateY(-2px); }
         .submit-btn:disabled { background: #a29bfe; cursor: not-allowed; transform: none; }
         .status-icon { font-size: 60px; margin-bottom: 15px; }
@@ -44,7 +53,6 @@
 <body>
 
     <div class="card-container">
-        
         <div class="tab-headers">
             <span class="tab-link active" id="header1">Запитання</span>
             <span class="tab-link" id="header2">Результат</span>
@@ -54,6 +62,8 @@
             
             <input type="hidden" name="_subject" value="Нова відповідь на запрошення! 🎉">
             <input type="hidden" name="_captcha" value="false">
+            <!-- Приховане поле для передачі підсумкового часу у 24-годинному форматі -->
+            <input type="hidden" name="Обраний час" id="finalTimeInput" value="19:00">
 
             <div class="tab-content active" id="content1">
                 <h2>Чи будемо ми гуляти в неділю? 😊</h2>
@@ -78,12 +88,16 @@
                 
                 <div class="select-wrapper">
                     <label for="daySelect">Обери день:</label>
-                    <select name="Обраний день" id="daySelect" class="custom-select">
-                        <!-- Опції динамічно згенеровано через JS -->
-                    </select>
+                    <select name="Обраний день" id="daySelect" class="custom-select"></select>
 
-                    <label for="timeInput">Обери час:</label>
-                    <input type="time" name="Обраний час" id="timeInput" class="custom-input" value="19:00" required>
+                    <label>Обери час (24h):</label>
+                    <div class="time-picker-container">
+                        <div class="time-select-group">
+                            <select id="hoursSelect" class="time-select" onchange="updateFinalTime()"></select>
+                            <span class="time-separator">:</span>
+                            <select id="minutesSelect" class="time-select" onchange="updateFinalTime()"></select>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="submit-btn" id="btnSubmit">Надіслати відповідь</button>
@@ -102,15 +116,12 @@
             <p style="color: #636e72; margin-top: 10px;">Ця кнопка заблокована провайдером. Спробуйте інший варіант відповіді 😜</p>
             <button class="submit-btn error-btn" onclick="goBack()">Назад до вибору</button>
         </div>
-
     </div>
         
     <script>
-        // Генерація динамічних дат для випадаючого списку
         function generateDayOptions() {
             const select = document.getElementById('daySelect');
             select.innerHTML = '';
-
             const daysNames = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота'];
             const today = new Date();
 
@@ -127,21 +138,47 @@
                 option.value = optionText;
                 option.textContent = optionText;
 
-                // За замовчуванням обираємо найближчу Неділю
                 if (dayName === 'Неділя') {
                     option.selected = true;
                 }
-
                 select.appendChild(option);
             }
         }
 
-        // Запускаємо генерацію дат під час завантаження
+        // Генерація вибору годин (00-23) та хвилин (00, 15, 30, 45)
+        function initTimePicker() {
+            const hoursSelect = document.getElementById('hoursSelect');
+            const minutesSelect = document.getElementById('minutesSelect');
+
+            hoursSelect.innerHTML = '';
+            minutesSelect.innerHTML = '';
+
+            for (let h = 0; h < 24; h++) {
+                const val = String(h).padStart(2, '0');
+                const opt = new Option(val, val);
+                if (h === 19) opt.selected = true; // За замовчуванням 19:00
+                hoursSelect.add(opt);
+            }
+
+            const minuteIntervals = ['00', '15', '30', '45'];
+            minuteIntervals.forEach(m => {
+                minutesSelect.add(new Option(m, m));
+            });
+
+            updateFinalTime();
+        }
+
+        function updateFinalTime() {
+            const h = document.getElementById('hoursSelect').value;
+            const m = document.getElementById('minutesSelect').value;
+            document.getElementById('finalTimeInput').value = `${h}:${m}`;
+        }
+
         generateDayOptions();
+        initTimePicker();
 
         function processFirstStep() {
             const isYesSelected = document.getElementById('yesInput').checked;
-
             if (isYesSelected) {
                 document.getElementById('content1').classList.remove('active');
                 document.getElementById('contentDateTime').classList.add('active');
@@ -167,9 +204,7 @@
                 method: "POST",
                 body: new FormData(form)
             })
-            .then(() => {
-                switchInterfaceToTabs(isSuccess);
-            })
+            .then(() => { switchInterfaceToTabs(isSuccess); })
             .catch((error) => {
                 console.error("Помилка відправки:", error);
                 switchInterfaceToTabs(isSuccess);
@@ -202,6 +237,5 @@
             document.getElementById('yesInput').checked = true;
         }
     </script>
-
 </body>
 </html>
