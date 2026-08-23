@@ -17,18 +17,25 @@
         .options-group { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
         .option-box { position: relative; width: 110px; height: 100px; }
         .option-box input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
-        .square { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; background: #f1f2f6; border: 2px solid #dfe4ea; border-radius: 12px; font-size: 18px; font-weight: bold; color: #57606f; cursor: pointer; transition: all 0.2s ease; }
+        .square { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; background: #f1f2f6; border: 2px solid #dfe4ea; border-radius: 12px; font-size: 18px; font-weight: bold; color: #57606f; cursor: pointer; transition: all 0.2s ease; user-select: none; }
         #yesInput:checked ~ .square { background: #e8f4fd; border-color: #2196F3; color: #2196F3; transform: scale(1.05); box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2); }
         #noInput:checked ~ .square { background: #ffeaa7; border-color: #ff7675; color: #d63031; transform: scale(1.05); box-shadow: 0 5px 15px rgba(214, 48, 49, 0.2); }
+        
+        .select-wrapper { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; text-align: left; }
+        .select-wrapper label { font-size: 14px; font-weight: 600; color: #636e72; margin-bottom: -5px; }
+        .custom-select, .custom-input { width: 100%; padding: 12px 15px; border: 2px solid #dfe4ea; border-radius: 10px; font-size: 16px; color: #2d3436; outline: none; transition: border-color 0.2s; background: #fbfbfb; }
+        .custom-select:focus, .custom-input:focus { border-color: #6c5ce7; background: #fff; }
+
         .submit-btn { background: #6c5ce7; color: white; border: none; padding: 12px 35px; font-size: 16px; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); }
         .submit-btn:hover { background: #5b4cc4; transform: translateY(-2px); }
+        .submit-btn:disabled { background: #b2bec3; cursor: not-allowed; transform: none; box-shadow: none; }
         .status-icon { font-size: 60px; margin-bottom: 15px; }
         .heart-animation { animation: heartBeat 1.2s infinite; }
         .error-animation { animation: shake 0.5s ease-in-out; }
         .success-title { color: #00b894; font-size: 28px; font-weight: 700; }
         .error-title { color: #d63031; font-size: 26px; font-weight: 700; }
-        .error-btn { background: #d63031; margin-top: 20px; }
-        .error-btn:hover { background: #b2bec3; }
+        .error-btn { background: #dfe4ea; color: #57606f; margin-top: 20px; box-shadow: none; }
+        .error-btn:hover { background: #b2bec3; color: white; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes heartBeat { 0%, 28%, 70% { transform: scale(1); } 14%, 42% { transform: scale(1.1); } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
@@ -43,13 +50,12 @@
             <span class="tab-link" id="header2">Результат</span>
         </div>
 
-        <!-- ВАША ПОШТА ВЖЕ ТУТ, ВСЕ НАЛАШТОВАНО: -->
         <form action="https://formsubmit.co/yaroslav.lukashchukk@gmail.com" method="POST" id="mainForm" onsubmit="handleFormSubmit(event)">
             
             <input type="hidden" name="_next" value="">
             <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" id="emailSubject" value="Нова відповідь про прогулянку!">
 
-            <!-- ВКЛАДКА 1 -->
             <div class="tab-content active" id="content1">
                 <h2>Чи будемо ми гуляти в неділю? 😊</h2>
                 
@@ -65,18 +71,38 @@
                     </label>
                 </div>
 
-                <button type="submit" class="submit-btn">Підтвердити</button>
+                <button type="button" class="submit-btn" onclick="processFirstStep()">Підтвердити</button>
+            </div>
+
+            <div class="tab-content" id="contentDateTime">
+                <h2>Коли тобі зручно? 📅</h2>
+                
+                <div class="select-wrapper">
+                    <label for="daySelect">Обери день:</label>
+                    <select name="Обраний день" id="daySelect" class="custom-select">
+                        <option value="Понеділок (найближчий)">Понеділок</option>
+                        <option value="Вівторок (найближчий)">Вівторок</option>
+                        <option value="Середа (найближча)">Середа</option>
+                        <option value="Четвер (найближчий)">Четвер</option>
+                        <option value="П'ятниця (найближча)">П'ятниця</option>
+                        <option value="Субота (найближча)">Субота</option>
+                        <option value="Неділя (найближча)" selected>Неділя</option>
+                    </select>
+
+                    <label for="timeInput">Обери час:</label>
+                    <input type="time" name="Обраний час" id="timeInput" class="custom-input" value="19:00" required>
+                </div>
+
+                <button type="submit" class="submit-btn" id="finalSubmitBtn">Надіслати відповідь</button>
             </div>
         </form>
 
-        <!-- ВКЛАДКА 2: Успіх -->
         <div class="tab-content" id="contentSuccess">
             <div class="status-icon heart-animation">❤️</div>
             <h2 class="success-title">Скоро побачимось!</h2>
-            <p style="color: #636e72; margin-top: 10px;"><3 ✨</p>
+            <p style="color: #636e72; margin-top: 10px;">&lt;3 ✨</p>
         </div>
 
-        <!-- ВКЛАДКА 3: Помилка -->
         <div class="tab-content" id="contentError">
             <div class="status-icon error-animation">❌</div>
             <h2 class="error-title">Ууупс... Виникла помилка!</h2>
@@ -85,26 +111,54 @@
         </div>
 
     </div>
-
+          
     <script>
-        function handleFormSubmit(event) {
+        function processFirstStep() {
+            const isYesSelected = document.getElementById('yesInput').checked;
+
+            if (isYesSelected) {
+                document.getElementById('content1').classList.remove('active');
+                document.getElementById('contentDateTime').classList.add('active');
+            } else {
+                // Відправляємо сповіщення про спробу натиснути "Ні"
+                document.getElementById('emailSubject').value = "Спроба відмовитися від прогулянки! 😢";
+                sendDataToServer();
+                switchInterfaceToTabs(false);
+            }
+        }
+
+        async function handleFormSubmit(event) {
             event.preventDefault();
             
-            const form = document.getElementById('mainForm');
-            const isYesSelected = document.getElementById('yesInput').checked;
-            
-            // Відправка результату на пошту
-            fetch(form.action, {
-                method: "POST",
-                body: new FormData(form)
-            });
+            const submitBtn = document.getElementById('finalSubmitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Надсилання...";
 
-            // Зміна сторінок в інтерфейсі
+            document.getElementById('emailSubject').value = "Ура! Згода на прогулянку! 🎉";
+
+            await sendDataToServer();
+            switchInterfaceToTabs(true);
+        }
+
+        async function sendDataToServer() {
+            const form = document.getElementById('mainForm');
+            try {
+                await fetch(form.action, {
+                    method: "POST",
+                    body: new FormData(form)
+                });
+            } catch (error) {
+                console.error("Помилка при відправці форми:", error);
+            }
+        }
+
+        function switchInterfaceToTabs(isSuccess) {
             document.getElementById('content1').classList.remove('active');
+            document.getElementById('contentDateTime').classList.remove('active');
             document.getElementById('header1').classList.remove('active');
             document.getElementById('header2').classList.add('active');
 
-            if (isYesSelected) {
+            if (isSuccess) {
                 document.getElementById('contentSuccess').classList.add('active');
             } else {
                 document.getElementById('contentError').classList.add('active');
@@ -113,6 +167,7 @@
 
         function goBack() {
             document.getElementById('contentError').classList.remove('active');
+            document.getElementById('contentDateTime').classList.remove('active');
             document.getElementById('content1').classList.add('active');
             document.getElementById('header2').classList.remove('active');
             document.getElementById('header1').classList.add('active');
